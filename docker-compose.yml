@@ -1,0 +1,72 @@
+version: '3.9'
+
+# ── SERVICIOS ─────────────────────────────────────────────────────────────────
+# Docker Compose levanta estos 3 contenedores como una red interna.
+# Se comunican entre sí por nombre de servicio (nexus-db, nexus-backend, nexus-frontend)
+
+services:
+
+  # ── BASE DE DATOS ────────────────────────────────────────────────────────────
+  nexus-db:
+    image: postgres:15               # Imagen oficial de PostgreSQL 15
+    container_name: nexus-db
+    restart: always                  # Se reinicia automáticamente si falla
+    environment:
+      POSTGRES_DB:       nexus_db
+      POSTGRES_USER:     nexus_user
+      POSTGRES_PASSWORD: nexus_pass
+    volumes:
+      # Volumen persistente: los datos de PostgreSQL sobreviven si el contenedor se reinicia
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      # Expone el puerto 5432 al host para poder conectarse con pgAdmin si se necesita
+      - "5432:5432"
+    healthcheck:
+      # Docker espera a que PostgreSQL esté listo antes de levantar el backend
+      test: ["CMD-SHELL", "pg_isready -U nexus_user -d nexus_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # ── BACKEND DJANGO ───────────────────────────────────────────────────────────
+  nexus-backend:
+    build:
+      context: ./nexus-backend       # Carpeta donde está el Dockerfile del backend
+      dockerfile: Dockerfile
+    container_name: nexus-backend
+    restart: always
+    environment:
+      # Variables de entorno que reemplazan al archivo .env local
+      SECRET_KEY:    django-secret-key-nexus-2026
+      DEBUG:         "True"
+      DB_NAME:       nexus_db
+      DB_USER:       nexus_user
+      DB_PASSWORD:   nexus_pass
+      DB_HOST:       nexus-db        # Nombre del servicio de base de datos
+      DB_PORT:       "5432"
+    ports:
+      - "8000:8000"
+    depends_on:
+      nexus-db:
+        condition: service_healthy   # Espera a que PostgreSQL esté listo (healthcheck)
+    volumes:
+      # Volumen para archivos subidos (media)
+      - media_data:/app/media
+
+  # ── FRONTEND REACT ───────────────────────────────────────────────────────────
+  nexus-frontend:
+    build:
+      context: ./Nexus-main # Carpeta donde está el Dockerfile del frontend
+      dockerfile: Dockerfile
+    container_name: nexus-frontend
+    restart: always
+    ports:
+      - "3000:80"                    # El puerto 3000 del host apunta al 80 de nginx
+    depends_on:
+      - nexus-backend                # Se levanta después del backend
+
+# ── VOLÚMENES ─────────────────────────────────────────────────────────────────
+# Los volúmenes persisten datos aunque se eliminen los contenedores
+volumes:
+  postgres_data:
+  media_data:

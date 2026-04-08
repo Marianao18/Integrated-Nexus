@@ -1,0 +1,22 @@
+# Variables de entorno
+.env
+.env.*
+
+# Node
+node_modules/
+build/
+
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Base de datos
+*.sqlite3
+
+# Logs
+*.log
+
+# Docker
+.dockerignore
