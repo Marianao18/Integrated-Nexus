@@ -8,7 +8,7 @@ export default function Footer() {
         NEX<span>U</span>S
       </div>
       <div className={styles.note}>
-        Tecnológico de Antioquia · Ingeniería en Software · 2026
+        Tecnológico de Antioquia · Ingeniería de Software · 2026
       </div>
       <div className={`${styles.note} ${styles.faint}`}>
         beyond control

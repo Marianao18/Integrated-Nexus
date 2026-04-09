@@ -4,17 +4,9 @@ import axios from 'axios';
 
 const API_URL = `${process.env.REACT_APP_API_URL}`;
 
-// ─── LOGOUT ───────────────────────────────────────────────────────────────────
-/**
- * Cierra la sesión correctamente:
- * 1. Invalida el refresh token en el servidor (blacklist)
- * 2. Limpia el localStorage
- * 3. Dispara el evento authChange para que App.jsx actualice el estado
- * 4. Redirige al /login
- */
 export const logout = async () => {
     const refreshToken = localStorage.getItem('refresh_token');
-    const accessToken  = localStorage.getItem('access_token');
+    const accessToken = localStorage.getItem('access_token');
 
     // Intentar invalidar el token en el servidor
     if (refreshToken && accessToken) {
@@ -42,10 +34,10 @@ export const logout = async () => {
 };
 
 // ─── HELPERS ──────────────────────────────────────────────────────────────────
-export const getAccessToken  = () => localStorage.getItem('access_token');
+export const getAccessToken = () => localStorage.getItem('access_token');
 export const getRefreshToken = () => localStorage.getItem('refresh_token');
-export const getUserRole     = () => localStorage.getItem('rol');
-export const getUserName     = () => localStorage.getItem('userName');
+export const getUserRole = () => localStorage.getItem('rol');
+export const getUserName = () => localStorage.getItem('userName');
 export const isAuthenticated = () => !!localStorage.getItem('access_token');
 
 // ─── INTERCEPTOR AXIOS ────────────────────────────────────────────────────────
