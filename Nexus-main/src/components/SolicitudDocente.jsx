@@ -33,9 +33,9 @@ const SolicitudDocente = () => {
     return (
         <div className="solicitud-container">
             <div className="solicitud-card">
-                <h2>Postulación para Docente</h2>
+                <h2>Postulación para el Docente</h2>
                 <p className="solicitud-subtitle">
-                    Completa tus datos para que el administrador revise tu perfil.
+                    Completa tus datos para que el administrador revise tu perfil correctamente.
                 </p>
                 
                 <form className="solicitud-form" onSubmit={enviarSolicitud}>
