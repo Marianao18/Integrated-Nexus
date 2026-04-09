@@ -25,7 +25,7 @@ export default function Hero() {
 
       <h1 className={styles.headline}>
         <span className={styles.line1}>NEXUS- </span>
-        <span className={styles.line2}>Beyondddd Control</span>
+        <span className={styles.line2}>Beyondd Controllllll</span>
       </h1>
 
       <p className={styles.sub}>
