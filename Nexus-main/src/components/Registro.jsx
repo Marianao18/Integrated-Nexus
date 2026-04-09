@@ -84,7 +84,7 @@ const Registro = () => {
 
                 <form onSubmit={manejarRegistro} className="registro-form">
                     <div className="form-group">
-                        <label>Nombre Completo</label>
+                        <label>Nombre Completooooo</label>
                         <input 
                             type="text" 
                             placeholder="Tu nombre" 
