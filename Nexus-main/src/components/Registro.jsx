@@ -56,7 +56,7 @@ const Registro = () => {
         setCargando(true);
 
         try {
-            const respuesta = await axios.post(`${process.env.REACT_APP_API_URL}/registrar-estudiante`, {
+            const respuesta = await axios.post(`${process.env.REACT_APP_API_URL}/registrar-estudiante/`, {
                 nombre: nombre.trim(),
                 email: email.trim().toLowerCase(),
                 password: password
