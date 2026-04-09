@@ -24,7 +24,7 @@ export default function Hero() {
       </div>
 
       <h1 className={styles.headline}>
-        <span className={styles.line1}>NQXUS- </span>
+        <span className={styles.line1}>NEXUS- </span>
         <span className={styles.line2}>Beyond Control</span>
       </h1>
 
